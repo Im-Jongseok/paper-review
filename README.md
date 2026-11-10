@@ -2,7 +2,7 @@
 
 논문 원문을 확대·강조하며 설명하는 인터랙티브 발표 자료. React · TypeScript · Vite · Three.js를 사용한다.
 
-[발표 자료 열기](https://im-jongseok.github.io/ai-memory-wall-interactive/)
+[발표 자료 열기](https://im-jongseok.github.io/paper-review/)
 
 ## 실행
 
