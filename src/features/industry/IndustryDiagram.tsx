@@ -1,6 +1,5 @@
 import { lazy, Suspense } from 'react';
 import type { IndustryScene } from '../../papers/types';
-import { MicronDiagram } from './micron/MicronDiagram';
 import './industry.css';
 const CerebrasModel = lazy(() =>
   import('./cerebras/CerebrasModel').then((module) => ({ default: module.CerebrasModel })),
@@ -12,7 +11,6 @@ const PimDiagram = lazy(() =>
   import('./pim/PimDiagram').then((module) => ({ default: module.PimDiagram })),
 );
 export function IndustryDiagram({ topic }: { topic: IndustryScene['topic'] }) {
-  if (topic === 'micron') return <MicronDiagram />;
   return (
     <Suspense
       fallback={

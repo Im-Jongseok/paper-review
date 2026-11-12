@@ -12,7 +12,5 @@ export function sceneStepCount(scene: ReviewScene) {
       return CXMT_MODES.length;
     case 'cerebras':
       return CEREBRAS_MODES.length;
-    case 'micron':
-      return 1;
   }
 }
