@@ -6,10 +6,10 @@ export const MICRON_STEPS = [
     body: 'DDR6는 CPU와 DRAM이 데이터를 주고받는 차세대 규격이다. Micron은 서버용 DDR6의 대역폭 개발 목표를 발표했다. 도해는 CPU와 메인 메모리 사이의 전송 경로를 단순화했다.',
   },
   {
-    label: 'MICRON · CAMM2 / LPCAMM2',
+    label: 'CAMM2 · MSI / MICRON',
     title: '메모리를 눕혀 장착하고\n교체할 수 있게 한다.',
-    stat: '최대 9,600 MT/s',
-    body: 'CAMM2는 모듈을 보드와 평행하게 놓고 커넥터에 눌러 연결하는 장착 규격이다. Micron의 노트북용 LPCAMM2는 LPDDR5X를 사용하며, 공개 사양의 데이터 버스 폭은 128비트다.',
+    stat: 'DDR5 CAMM2 · LPDDR5X LPCAMM2',
+    body: 'MSI 데스크톱 보드에서는 DDR5 CAMM2가 CPU 소켓 옆에 평평하게 놓인다. Micron의 노트북용 LPCAMM2는 LPDDR5X를 사용하며 공개 사양은 최대 9,600 MT/s, 128비트다. 두 예시 모두 모듈을 보드 쪽으로 눌러 접점을 연결한다.',
   },
   {
     label: 'MICRON · SOCAMM2',

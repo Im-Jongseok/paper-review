@@ -782,6 +782,10 @@ export const scenes = [
         url: 'https://assets.micron.com/adobe/assets/urn%3Aaaid%3Aaem%3A4e076108-df95-4c2d-8785-06c30049afb5/original/as/lpddr5x-camm2-technical-brief.pdf',
       },
       {
+        label: 'MSI · 데스크톱 CAMM2 시연',
+        url: 'https://au.msi.com/blog/computex-2024-round-up-latest-motherboards-and-pc-components',
+      },
+      {
         label: '256 GB SOCAMM2 샘플',
         url: 'https://investors.micron.com/node/50111/pdf',
       },

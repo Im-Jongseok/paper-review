@@ -91,12 +91,69 @@ function moduleDiagram(server) {
   };
 }
 
+function desktopDiagram() {
+  const board = part(-215, -132, 430, 272, 0, 6, 'desktop-board');
+  const socket = part(44, -86, 102, 175, 6, 8, 'socket');
+  const moduleRim = part(37, -94, 116, 192, 14, 3, 'metal-gold');
+  const pcb = part(38, -93, 114, 190, 17, 4, 'desktop-module');
+  const cpuFrame = part(-158, -55, 132, 132, 6, 8, 'metal');
+  const cpu = part(-148, -45, 112, 112, 14, 7, 'chip');
+  const heatsink = part(-183, -113, 174, 36, 6, 18, 'metal');
+  const rise = 76;
+  const camera = anatomy.fitProjection(
+    [...corners(board), ...corners({ ...pcb, z: pcb.z + rise + 7 })],
+    width,
+    height,
+    view,
+  );
+  const fins = Array.from({ length: 4 }, (_, i) =>
+    part(-179, -110 + i * 8, 166, 4, 24, 3, 'metal'),
+  );
+  const packages = [-78, -49, 24, 53].flatMap((y) =>
+    [48, 99].map((x) => part(x, y, 43, 24, 21, 5, 'chip')),
+  );
+  const fasteners = [
+    [45, -85],
+    [145, -85],
+    [95, 6],
+    [45, 89],
+    [145, 89],
+  ].map(([x, y]) =>
+    anatomy.solidSvg(anatomy.cylinder(x, y, 4, 21, 3, camera, 16), { className: 'metal' }),
+  );
+  const contacts = Array.from({ length: 12 }, (_, row) =>
+    Array.from({ length: 8 }, (_, col) => {
+      const x = 52 + col * 12;
+      const y = -74 + row * 13.5;
+      return anatomy.onTop(
+        [
+          [x, y],
+          [x + 4, y],
+        ],
+        14,
+        camera,
+      );
+    }),
+  ).flat();
+  return {
+    board: drawParts([board, heatsink, ...fins, cpuFrame, cpu], camera),
+    socket: draw(socket, camera),
+    module:
+      drawParts([moduleRim, pcb, ...packages, part(88, -16, 16, 13, 21, 3, 'chip')], camera) +
+      fasteners.join(''),
+    contacts,
+    lift: point([0, 0, rise], camera)[1] - point([0, 0, 0], camera)[1],
+    cpu: point([-92, 11, 21], camera),
+  };
+}
+
 writeFileSync(
   new URL('../../src/papers/ai-memory-wall/generated/micron-anatomy.json', import.meta.url),
   JSON.stringify({
     width,
     height,
     bandwidth: bandwidth(),
+    desktop: desktopDiagram(),
     laptop: moduleDiagram(false),
     server: moduleDiagram(true),
   }) + '\n',

@@ -23,6 +23,26 @@
   --face: #2e4b60;
   --edge: #243d50;
 }
+.micron-visual .iso-solid.desktop-board {
+  --top: #394954;
+  --face: #2b3a43;
+  --edge: #202d36;
+}
+.micron-visual .iso-solid.desktop-module {
+  --top: #5a5176;
+  --face: #453b62;
+  --edge: #342d49;
+}
+.micron-visual .iso-solid.metal {
+  --top: #d2dde3;
+  --face: #a7b8c3;
+  --edge: #7d929f;
+}
+.micron-visual .iso-solid.metal-gold {
+  --top: #e6c468;
+  --face: #c7a44d;
+  --edge: #9c7a2f;
+}
 .micron-visual .iso-fill,
 .micron-visual .iso-shade {
   fill: var(--face);
@@ -85,6 +105,12 @@
 }
 .micron-key.module-key {
   background: #61959c;
+}
+.micron-key.desktop-module-key {
+  background: #5a5176;
+}
+.micron-key.desktop-board-key {
+  background: #394954;
 }
 .micron-key.contact-key {
   background: var(--highlight);
