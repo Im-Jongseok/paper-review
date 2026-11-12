@@ -754,4 +754,39 @@ export const scenes = [
     source:
       '발표자 보충 · Applied Materials 기술 설명·DRAMScope·SK hynix 연구·Yicai 현장 취재 · 2026-11-03 확인',
   },
+  {
+    id: 'micron',
+    kind: 'industry',
+    topic: 'micron',
+    chapter: '최근 동향',
+    label: 'MICRON · DDR6 / CAMM2 / SOCAMM2',
+    title: '메모리 규격과\n장착 방식을 구분한다.',
+    stat: '',
+    body: 'DDR6는 CPU와 DRAM이 데이터를 주고받는 규격이다. CAMM2는 모듈을 보드에 눕히고 접점을 눌러 연결하는 장착 방식이다. Micron의 LPCAMM2는 노트북용, SOCAMM2는 데이터센터용이다.',
+    updates: [],
+    connection:
+      'DDR6는 CPU와 메인 메모리 사이의 전송량을 늘리는 방향이다. SOCAMM2는 서버가 긴 문맥의 KV 캐시 같은 데이터를 담을 용량을 확보하는 데 쓰인다.',
+    qualification:
+      '256 GB SOCAMM2 샘플은 LPDDR5X 기반이다. Micron은 LPDDR6 기반 SOCAMM2도 향후 확장 방향으로 제시했다.',
+    links: [
+      {
+        label: 'DDR6 기술 발표 · 슬라이드 19',
+        url: 'https://6ix.com/deck/00znsgtd/micron-technology-technical-presentation-october-2026',
+      },
+      {
+        label: 'LPCAMM2 공개 사양',
+        url: 'https://investors.micron.com/news/press-release/2026/Micron-Powers-AI-Everywhere-at-COMPUTEX-2026/',
+      },
+      {
+        label: '256 GB SOCAMM2 샘플',
+        url: 'https://investors.micron.com/node/50111/pdf',
+      },
+      {
+        label: 'LPDDR6 SOCAMM2 방향',
+        url: 'https://www.micron.com/about/blog/memory/dram/lpddr6-enabling-scalable-power-efficient-memory-systems-for-data-centers',
+      },
+    ],
+    note: '- Micron 2026년 10월 기술 발표 슬라이드 19의 2배 초과 수치는 서버용 DDR6의 개발 목표다.\n- Micron의 LPCAMM2 공개 사양은 LPDDR5X, 최대 9,600 MT/s, 128비트다. 이론 대역폭은 9,600 × 128 ÷ 8 = 153.6 GB/s다.\n- 256 GB SOCAMM2는 2026년 3월 LPDDR5X 기반 고객 샘플이 발표됐다. LPDDR6 SOCAMM2는 Micron이 공개한 향후 방향이다.\n- 시스템 메모리에 KV 캐시를 둘 때는 메모리 대역폭과 함께 가속기까지의 전송 경로도 고려한다.',
+    source: '발표자 보충 · Micron 기술 발표 및 제품 자료',
+  },
 ] satisfies ReviewScene[];

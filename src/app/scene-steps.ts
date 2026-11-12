@@ -5,9 +5,14 @@ export const CXMT_MODES = ['baseline', 'compact', 'array', 'density'] as const;
 export function sceneStepCount(scene: ReviewScene) {
   if (scene.kind === 'hbm') return scene.problems?.length || 1;
   if (scene.kind !== 'industry') return 1;
-  return scene.topic === 'pim'
-    ? PIM_GROUPS.length
-    : scene.topic === 'cxmt'
-      ? CXMT_MODES.length
-      : CEREBRAS_MODES.length;
+  switch (scene.topic) {
+    case 'pim':
+      return PIM_GROUPS.length;
+    case 'cxmt':
+      return CXMT_MODES.length;
+    case 'cerebras':
+      return CEREBRAS_MODES.length;
+    case 'micron':
+      return 1;
+  }
 }

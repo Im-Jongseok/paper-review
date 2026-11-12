@@ -1,0 +1,56 @@
+.micron-visual {
+  width: min(100%, 780px);
+  margin: 0 auto;
+  gap: 20px;
+}
+.micron-visual figcaption {
+  font-size: clamp(19px, 2vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.micron-visual dl {
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+}
+.micron-entry {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+  padding: clamp(16px, 2.3vw, 30px) 0;
+  border-top: 1px solid var(--line);
+}
+.micron-entry dd {
+  margin: 0;
+  padding-left: clamp(12px, 2vw, 28px);
+  border-left: 2px solid var(--highlight);
+}
+.micron-entry strong,
+.micron-entry span {
+  display: block;
+}
+.micron-entry dt strong {
+  font-size: clamp(20px, 2.6vw, 36px);
+  font-weight: 600;
+  line-height: 1.15;
+}
+.micron-entry dd strong {
+  color: var(--accent);
+  font-size: clamp(18px, 2.55vw, 35px);
+  font-weight: 600;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.micron-entry span {
+  margin-top: 7px;
+  color: #52646f;
+  font-size: clamp(12px, 1.05vw, 15px);
+  line-height: 1.55;
+  word-break: keep-all;
+}
+@media (max-width: 600px) {
+  .micron-visual {
+    height: auto;
+    gap: 12px;
+  }
+}

@@ -41,7 +41,7 @@ export interface HbmScene extends SceneText {
 }
 export interface IndustryScene extends SceneText {
   kind: 'industry';
-  topic: 'cerebras' | 'cxmt' | 'pim';
+  topic: 'cerebras' | 'cxmt' | 'pim' | 'micron';
   updates: { date: string; status: string; text: string }[];
   connection: string;
   qualification: string;
