@@ -217,12 +217,22 @@ export function Presentation({
                   }}
                 />
                 {industryScene ? (
-                  <IndustryDiagram key={industryScene.id} topic={industryScene.topic} />
+                  <IndustryDiagram
+                    key={industryScene.id}
+                    topic={industryScene.topic}
+                    phase={phaseIndex}
+                  />
                 ) : null}
               </>
             }
             explanation={
-              <ExplanationPanel paper={paper} scene={scene} freePage={freePage} notes={notes} />
+              <ExplanationPanel
+                paper={paper}
+                scene={scene}
+                freePage={freePage}
+                notes={notes}
+                phase={phaseIndex}
+              />
             }
             controls={
               <PresentationControls

@@ -1,44 +1,80 @@
+import { useState } from 'react';
+import model from '../../../papers/ai-memory-wall/generated/micron-anatomy.json';
 import './micron.css';
 
-const entries = [
-  {
-    name: 'DDR6',
-    role: '서버용 DRAM 인터페이스',
-    metric: '>2배',
-    detail: 'DDR5 대비 대역폭 개발 목표',
-  },
-  {
-    name: 'CAMM2',
-    role: '보드에 눕혀 장착하는 교체형 모듈',
-    metric: '9,600 MT/s',
-    detail: 'Micron 노트북용 LPCAMM2 · LPDDR5X 최대 사양',
-  },
-  {
-    name: 'SOCAMM2',
-    role: '데이터센터용 소형 교체형 모듈',
-    metric: '256 GB',
-    detail: 'Micron LPDDR5X 모듈 · 고객 샘플 공개',
-  },
-];
-
-export function MicronDiagram() {
+function BandwidthDiagram() {
+  const { board, packages, routes, cpu, memory } = model.bandwidth;
   return (
-    <figure className="industry-visual micron-visual" aria-labelledby="micron-comparison">
-      <figcaption id="micron-comparison">Micron의 메모리 규격과 모듈</figcaption>
-      <dl>
-        {entries.map(({ name, role, metric, detail }) => (
-          <div key={name} className="micron-entry">
-            <dt>
-              <strong>{name}</strong>
-              <span>{role}</span>
-            </dt>
-            <dd>
-              <strong>{metric}</strong>
-              <span>{detail}</span>
-            </dd>
-          </div>
-        ))}
-      </dl>
+    <>
+      <g dangerouslySetInnerHTML={{ __html: board }} />
+      {routes.map((path) => (
+        <path key={path} d={path} className="micron-route" />
+      ))}
+      <g dangerouslySetInnerHTML={{ __html: packages }} />
+      <text x={cpu[0]} y={cpu[1]} className="micron-chip-label">
+        CPU
+      </text>
+      <text x={memory[0]} y={memory[1]} className="micron-chip-label">
+        DRAM
+      </text>
+    </>
+  );
+}
+
+export function MicronDiagram({ phase }: { phase: number }) {
+  const [assembled, setAssembled] = useState(false);
+  const bandwidth = phase === 0;
+  const server = phase === 2;
+  const module = server ? model.server : model.laptop;
+  const name = bandwidth ? 'DDR6' : server ? 'SOCAMM2' : 'LPCAMM2';
+  const description = bandwidth
+    ? 'CPU에서 메인 메모리로 이어지는 데이터 경로'
+    : `${name} 모듈과 압착 커넥터, 메인보드의 장착 구조`;
+  return (
+    <figure className="industry-visual micron-visual">
+      <svg viewBox={`0 0 ${model.width} ${model.height}`} role="img" aria-label={description}>
+        {bandwidth ? (
+          <BandwidthDiagram />
+        ) : (
+          <>
+            <g dangerouslySetInnerHTML={{ __html: module.board + module.socket }} />
+            {module.contacts.map((path) => (
+              <path key={path} d={path} className="micron-contact" />
+            ))}
+            <g
+              className="micron-module-layer"
+              style={{ transform: `translateY(${assembled ? 0 : module.lift}px)` }}
+              dangerouslySetInnerHTML={{ __html: module.module }}
+            />
+          </>
+        )}
+      </svg>
+      <figcaption className="micron-caption">
+        {bandwidth ? (
+          <span>
+            <i className="micron-key contact-key" /> CPU ↔ 메인 메모리 데이터 경로
+          </span>
+        ) : (
+          <>
+            <span>
+              <i className="micron-key module-key" /> LPDDR5X 모듈
+            </span>
+            <span>
+              <i className="micron-key contact-key" /> 압착 접점
+            </span>
+            <span>
+              <i className="micron-key board-key" /> 메인보드
+            </span>
+            <button
+              type="button"
+              className="micron-assemble"
+              onClick={() => setAssembled(!assembled)}
+            >
+              {assembled ? '분해 보기' : '장착 보기'}
+            </button>
+          </>
+        )}
+      </figcaption>
     </figure>
   );
 }

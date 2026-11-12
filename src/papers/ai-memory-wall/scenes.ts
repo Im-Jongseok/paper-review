@@ -767,7 +767,7 @@ export const scenes = [
     connection:
       'DDR6는 CPU와 메인 메모리 사이의 전송량을 늘리는 방향이다. SOCAMM2는 서버가 긴 문맥의 KV 캐시 같은 데이터를 담을 용량을 확보하는 데 쓰인다.',
     qualification:
-      '256 GB SOCAMM2 샘플은 LPDDR5X 기반이다. Micron은 LPDDR6 기반 SOCAMM2도 향후 확장 방향으로 제시했다.',
+      '입체 모형은 데이터 경로와 장착 구조를 보여 주는 개념도다.',
     links: [
       {
         label: 'DDR6 기술 발표 · 슬라이드 19',
@@ -776,6 +776,10 @@ export const scenes = [
       {
         label: 'LPCAMM2 공개 사양',
         url: 'https://investors.micron.com/news/press-release/2026/Micron-Powers-AI-Everywhere-at-COMPUTEX-2026/',
+      },
+      {
+        label: 'LPCAMM2 장착 구조 · Fig. 1',
+        url: 'https://assets.micron.com/adobe/assets/urn%3Aaaid%3Aaem%3A4e076108-df95-4c2d-8785-06c30049afb5/original/as/lpddr5x-camm2-technical-brief.pdf',
       },
       {
         label: '256 GB SOCAMM2 샘플',

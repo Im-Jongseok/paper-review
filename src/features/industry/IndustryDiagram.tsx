@@ -11,8 +11,14 @@ const CxmtModel = lazy(() =>
 const PimDiagram = lazy(() =>
   import('./pim/PimDiagram').then((module) => ({ default: module.PimDiagram })),
 );
-export function IndustryDiagram({ topic }: { topic: IndustryScene['topic'] }) {
-  if (topic === 'micron') return <MicronDiagram />;
+export function IndustryDiagram({
+  topic,
+  phase,
+}: {
+  topic: IndustryScene['topic'];
+  phase: number;
+}) {
+  if (topic === 'micron') return <MicronDiagram key={phase} phase={phase} />;
   return (
     <Suspense
       fallback={
