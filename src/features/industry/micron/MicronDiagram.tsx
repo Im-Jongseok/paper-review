@@ -55,7 +55,7 @@ function ModuleDiagram({ kind }: { kind: ModuleKind }) {
           dangerouslySetInnerHTML={{ __html: module.module }}
         />
       </svg>
-      <figcaption className="micron-caption">
+      <div className="micron-caption">
         <span>
           <i className={`micron-key ${desktop ? 'desktop-module-key' : 'module-key'}`} />{' '}
           {desktop ? 'DDR5 CAMM2 모듈' : 'LPDDR5X 모듈'}
@@ -73,48 +73,53 @@ function ModuleDiagram({ kind }: { kind: ModuleKind }) {
         >
           {assembled ? '분해 보기' : '장착 보기'}
         </button>
-      </figcaption>
+      </div>
     </>
   );
 }
 
-export function MicronDiagram({ phase }: { phase: number }) {
+export function MicronDiagram() {
   const [camm, setCamm] = useState<'desktop' | 'laptop'>('desktop');
-  const kind = phase === 2 ? 'server' : camm;
   return (
-    <figure className="industry-visual micron-visual">
-      {phase === 1 && (
+    <div className="industry-visual micron-visual">
+      <section className="micron-bandwidth" aria-labelledby="micron-ddr6">
+        <svg
+          viewBox={`0 0 ${model.width} ${model.height}`}
+          role="img"
+          aria-label="CPU와 메인 메모리 사이의 데이터 경로"
+        >
+          <BandwidthDiagram />
+        </svg>
+        <header>
+          <h2 id="micron-ddr6">DDR6</h2>
+          <p>
+            <strong>DDR5 대비 2배 초과</strong> 대역폭 개발 목표
+          </p>
+        </header>
+      </section>
+      <section className="micron-panel" aria-labelledby="micron-camm2">
+        <h2 id="micron-camm2">CAMM2</h2>
         <div className="industry-view-switch" role="group" aria-label="CAMM2 장착 예시 선택">
           <button
             type="button"
             aria-pressed={camm === 'desktop'}
             onClick={() => setCamm('desktop')}
           >
-            MSI DDR5 CAMM2
+            MSI DDR5
           </button>
           <button type="button" aria-pressed={camm === 'laptop'} onClick={() => setCamm('laptop')}>
-            Micron LPDDR5X LPCAMM2
+            Micron LPCAMM2
           </button>
         </div>
-      )}
-      {phase === 0 ? (
-        <>
-          <svg
-            viewBox={`0 0 ${model.width} ${model.height}`}
-            role="img"
-            aria-label="CPU와 메인 메모리 사이의 데이터 경로"
-          >
-            <BandwidthDiagram />
-          </svg>
-          <figcaption className="micron-caption">
-            <span>
-              <i className="micron-key contact-key" /> CPU ↔ 메인 메모리 데이터 경로
-            </span>
-          </figcaption>
-        </>
-      ) : (
-        <ModuleDiagram key={kind} kind={kind} />
-      )}
-    </figure>
+        <ModuleDiagram key={camm} kind={camm} />
+      </section>
+      <section className="micron-panel" aria-labelledby="micron-socamm2">
+        <h2 id="micron-socamm2">SOCAMM2</h2>
+        <p>
+          <strong>256 GB</strong> · 서버용 LPDDR5X 샘플
+        </p>
+        <ModuleDiagram kind="server" />
+      </section>
+    </div>
   );
 }

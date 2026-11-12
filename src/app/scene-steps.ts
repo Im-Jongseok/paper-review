@@ -1,6 +1,5 @@
 import type { ReviewScene } from '../papers/types';
 import { PIM_GROUPS } from '../features/industry/pim/model';
-import { MICRON_STEPS } from '../features/industry/micron/explanation';
 export const CEREBRAS_MODES = ['wafer', 'core', 'stack'] as const;
 export const CXMT_MODES = ['baseline', 'compact', 'array', 'density'] as const;
 export function sceneStepCount(scene: ReviewScene) {
@@ -14,6 +13,6 @@ export function sceneStepCount(scene: ReviewScene) {
     case 'cerebras':
       return CEREBRAS_MODES.length;
     case 'micron':
-      return MICRON_STEPS.length;
+      return 1;
   }
 }

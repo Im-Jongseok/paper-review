@@ -762,12 +762,12 @@ export const scenes = [
     label: 'MICRON · DDR6 / CAMM2 / SOCAMM2',
     title: '메모리 규격과\n장착 방식을 구분한다.',
     stat: '',
-    body: 'DDR6는 CPU와 DRAM이 데이터를 주고받는 규격이다. CAMM2는 모듈을 보드에 눕히고 접점을 눌러 연결하는 장착 방식이다. Micron의 LPCAMM2는 노트북용, SOCAMM2는 데이터센터용이다.',
+    body: 'DDR6는 CPU와 DRAM이 데이터를 주고받는 차세대 규격이다. CAMM2는 모듈을 보드와 평행하게 눌러 연결하는 장착 규격이다. MSI는 데스크톱 DDR5 CAMM2를 시연했다. Micron의 노트북용 LPDDR5X LPCAMM2 공개 사양은 최대 9,600 MT/s, 128비트다.',
     updates: [],
     connection:
       'DDR6는 CPU와 메인 메모리 사이의 전송량을 늘리는 방향이다. SOCAMM2는 서버가 긴 문맥의 KV 캐시 같은 데이터를 담을 용량을 확보하는 데 쓰인다.',
     qualification:
-      '입체 모형은 데이터 경로와 장착 구조를 보여 주는 개념도다.',
+      '입체 모형은 장착 구조를 단순화했다. LPDDR6 기반 SOCAMM2는 Micron이 제시한 후속 방향이다.',
     links: [
       {
         label: 'DDR6 기술 발표 · 슬라이드 19',

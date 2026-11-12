@@ -1,7 +1,57 @@
-.micron-visual {
+.industry-visual.micron-visual {
   width: min(100%, 820px);
   margin: 0 auto;
-  gap: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: center;
+  gap: 16px 22px;
+}
+.micron-bandwidth {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: 16px;
+  align-items: center;
+}
+.micron-visual h2 {
+  margin: 0;
+  color: #355469;
+  font-size: clamp(18px, 1.8vw, 25px);
+  line-height: 1.2;
+}
+.micron-visual p {
+  margin: 5px 0 0;
+  color: #52646f;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.micron-visual p strong {
+  color: var(--accent);
+}
+.micron-panel {
+  min-width: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.micron-panel > p,
+.micron-panel .industry-view-switch {
+  min-height: 31px;
+  margin: 3px 0 0;
+}
+.micron-panel > p {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.micron-panel .industry-view-switch {
+  justify-content: flex-start;
+  gap: 4px;
+}
+.micron-panel .industry-view-switch button {
+  padding: 4px 6px;
+}
+.micron-visual svg {
+  height: clamp(110px, 25dvh, 220px);
 }
 .micron-visual .iso-solid {
   --top: #c0d7e1;
@@ -86,10 +136,10 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px 18px;
+  gap: 5px 10px;
   min-height: 36px;
   color: #52646f;
-  font-size: 13px;
+  font-size: 11px;
 }
 .micron-caption span {
   display: inline-flex;
@@ -125,12 +175,20 @@
   border-color: var(--accent);
 }
 @media (max-width: 600px) {
-  .micron-visual {
+  .industry-visual.micron-visual {
     height: auto;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .micron-bandwidth {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .micron-bandwidth header {
+    grid-row: 1;
   }
   .micron-caption {
     font-size: 12px;
-    gap: 6px 10px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

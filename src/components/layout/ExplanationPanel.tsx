@@ -8,19 +8,16 @@ import { useCxmtMode } from '../../features/industry/cxmt/context';
 import { CXMT_EXPLANATION } from '../../features/industry/cxmt/explanation';
 import { CEREBRAS_EXPLANATION } from '../../features/industry/cerebras/explanation';
 import { IndustryDetails } from '../../features/industry/IndustryDetails';
-import { MICRON_STEPS } from '../../features/industry/micron/explanation';
 export function ExplanationPanel({
   paper,
   scene,
   freePage,
   notes,
-  phase,
 }: {
   paper: PaperDefinition;
   scene: ReviewScene;
   freePage: number | null;
   notes: boolean;
-  phase: number;
 }) {
   const ref = useRef<HTMLElement>(null);
   const page = paper.pages.find((p) => p.id === freePage);
@@ -35,9 +32,7 @@ export function ExplanationPanel({
         ? CXMT_EXPLANATION[cxmtMode]
         : scene.kind === 'industry' && scene.topic === 'pim'
           ? PIM_EXPLANATION[pimView]
-          : scene.kind === 'industry' && scene.topic === 'micron'
-            ? MICRON_STEPS[phase]
-            : scene;
+          : scene;
   const stat = page ? '원문 탐색' : text.stat;
   useEffect(() => {
     const node = ref.current;
@@ -48,7 +43,7 @@ export function ExplanationPanel({
       void node.offsetWidth;
       node.classList.add('scene-enter');
     }
-  }, [scene.id, freePage, mode, cxmtMode, pimView, text]);
+  }, [scene.id, freePage, mode, cxmtMode, pimView]);
   return (
     <aside
       ref={ref}
