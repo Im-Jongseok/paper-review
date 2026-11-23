@@ -21,15 +21,15 @@ export const paper = {
   authors: 'Xiaoyu Ma · David Patterson',
   citation: '26번 논문 · IEEE Computer 59(5), 2026 · pp.55–64',
   sourceUrl: 'https://doi.org/10.1109/MC.2026.3652916',
-  pdf: asset('paper.pdf'),
+  pdf: asset('ieee.pdf'),
   exportFilename: 'LLM_Inference_Hardware_인터랙티브.html',
   pageSize: { width: 567, height: 774 },
   pages: pageTitles.map((title, i) => ({
     id: i + 1,
     printedPage: String(i + 55),
     title,
-    image: asset(`page-${i + 1}.webp`),
-    thumbnail: asset(`thumb-${i + 1}.webp`),
+    image: asset(`ieee-page-${i + 1}.webp`),
+    thumbnail: asset(`ieee-thumb-${i + 1}.webp`),
   })),
   scenes,
 } satisfies PaperDefinition;
