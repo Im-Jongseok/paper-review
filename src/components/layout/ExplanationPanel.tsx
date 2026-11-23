@@ -26,7 +26,7 @@ export function ExplanationPanel({
   const { index: pimIndex } = usePimStep();
   const pimView = pimMode(pimIndex);
   const { mode: cxmtMode } = useCxmtMode();
-  const text =
+  const text: Pick<ReviewScene, 'label' | 'title' | 'stat' | 'body' | 'bullets'> =
     scene.kind === 'industry' && scene.topic === 'cerebras' && mode !== 'wafer'
       ? CEREBRAS_EXPLANATION[mode]
       : scene.kind === 'industry' && scene.topic === 'cxmt'
@@ -69,11 +69,25 @@ export function ExplanationPanel({
       >
         {stat}
       </div>
-      <p id="scene-body" className="scene-body">
-        {page
-          ? '표시된 영역을 선택하면 해당 그림이나 문단으로 이동합니다. 휠이나 드래그로 이동하고, Ctrl+휠로 확대할 수 있습니다.'
-          : text.body}
-      </p>
+      <div id="scene-body" className="scene-body">
+        {page ? (
+          <p>
+            표시된 영역을 선택하면 해당 그림이나 문단으로 이동합니다. 휠이나 드래그로 이동하고,
+            Ctrl+휠로 확대할 수 있습니다.
+          </p>
+        ) : (
+          <>
+            {text.body ? <p>{text.body}</p> : null}
+            {text.bullets?.length ? (
+              <ul className="scene-points">
+                {text.bullets.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+            ) : null}
+          </>
+        )}
+      </div>
       {scene.kind === 'paper' && scene.capacityExample && !page && (
         <StackCapacityExample key={scene.id} example={scene.capacityExample} />
       )}

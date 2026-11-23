@@ -28,9 +28,21 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: '연구 질문',
     page: 1,
     roi: area(54, 421, 462, 553),
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(60, 447, 450, 531),
+        label: 'Four research directions in the abstract',
+      },
+    ],
     title: 'LLM의 답변 속도를\n무엇이 제한할까?',
     stat: '메모리 용량 · 대역폭 · 통신 지연',
-    body: 'LLM은 답변을 생성할 때 모델의 가중치를 메모리에서 읽고, 여러 연산 칩을 쓰면 중간 결과도 주고받는다. 저자들은 이 데이터 이동이 응답 시간을 늘리는 원인에 주목하며, 메모리와 칩 사이의 연결을 개선할 네 가지 연구 방향을 제시한다.',
+    body: '저자들은 데이터 이동이 LLM의 응답 시간을 늘리는 원인에 주목하며, 메모리와 칩 사이의 연결을 개선할 네 가지 연구 방향을 제시한다.',
+    bullets: [
+      '메모리 용량: 가중치와 KV 캐시를 저장할 공간',
+      '메모리 대역폭: 계산에 필요한 데이터를 옮기는 속도',
+      '통신 지연: 여러 칩이 중간 결과를 주고받을 때의 대기 시간',
+    ],
     note: '가중치는 학습으로 정해진 모델의 수치다. 용량은 저장할 수 있는 데이터의 양, 대역폭은 초당 옮길 수 있는 양, 지연은 필요한 데이터나 결과를 받을 때까지 걸리는 시간이다.',
   },
   {
@@ -39,9 +51,22 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'INTRODUCTION',
     page: 2,
     roi: area(32, 164, 193, 580),
+    emphasis: [
+      { kind: 'box', rect: area(55, 229, 191, 267), label: 'MoE expands memory and communication' },
+      {
+        kind: 'box',
+        rect: area(48, 268, 192, 389),
+        label: 'Reasoning increases generation latency and memory demand',
+      },
+    ],
     title: '모델의 사용 방식이 바뀌면\n메모리 부담도 커진다.',
     stat: '전문가 수 · 문맥 길이 · 생성 길이',
-    body: 'MoE는 여러 전문가 신경망 중 일부를 골라 계산하지만, 선택에 대비해 전문가들의 가중치를 저장해야 한다. 긴 문맥과 reasoning 모델의 긴 사고 과정은 저장하고 다시 읽어야 할 정보를 늘린다. 검색 결과를 입력에 더하는 RAG도 처리할 문맥을 길게 만든다.',
+    body: '새로운 모델 구조와 사용 방식은 저장하고 다시 읽어야 할 정보를 늘린다.',
+    bullets: [
+      'MoE: 일부 전문가만 계산해도 전문가들의 가중치를 저장해야 한다.',
+      '긴 문맥·reasoning: 긴 입력과 사고 토큰이 메모리 부담을 늘린다.',
+      'RAG: 검색 결과를 입력에 더해 처리할 문맥이 길어진다.',
+    ],
     note: '토큰은 문장을 처리하는 단위로, 단어나 단어의 일부 등에 해당한다. 여기서 추론 과정은 reasoning 모델이 답변 전에 사고 토큰을 생성하는 과정을 뜻한다. 논문은 확산 모델의 계산 수요도 별도로 다룬다.',
   },
   {
@@ -50,7 +75,9 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'FIGURE 1 · PREFILL',
     page: 2,
     roi: area(30, 585, 359, 730),
-    emphasis: [{ kind: 'box', rect: area(36, 588, 97, 699) }],
+    emphasis: [
+      { kind: 'box', rect: area(36, 588, 97, 699), label: 'Prefill processes the input tokens' },
+    ],
     title: '입력 토큰을 함께 처리하고\n생성에 쓸 정보를 저장한다.',
     stat: 'Prefill · 입력 처리',
     body: '그림 왼쪽의 Prefill은 입력 문장을 토큰(단어나 단어의 일부 등) 단위로 나눠 병렬로 처리한다. 각 토큰에서 구한 키와 값(K·V)을 KV 캐시에 저장하면, 생성 단계에서 앞선 문맥을 다시 활용할 수 있다. 병렬성이 높아 연산 성능의 영향을 크게 받는 단계다.',
@@ -62,7 +89,9 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'FIGURE 1 · DECODE',
     page: 2,
     roi: area(30, 585, 359, 730),
-    emphasis: [{ kind: 'box', rect: area(98, 623, 354, 699) }],
+    emphasis: [
+      { kind: 'box', rect: area(98, 623, 354, 699), label: 'Decode generates tokens sequentially' },
+    ],
     title: '새 토큰을 하나 생성한 뒤\n다음 토큰을 계산한다.',
     stat: 'Decode · 순차 생성',
     body: '그림의 노란 칸은 토큰을 하나씩 생성하는 단계를 나타낸다. 매 단계마다 가중치와 KV 캐시를 읽고, 새 토큰의 K·V를 캐시에 추가한다. 동시에 처리하는 요청 수인 배치 크기가 작으면 가중치 재사용이 줄어 메모리 대역폭의 영향이 커진다.',
@@ -74,9 +103,17 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'FIGURE 2',
     page: 3,
     roi: area(207, 171, 534, 310),
+    emphasis: [
+      { kind: 'box', rect: area(216, 183, 363, 283), label: 'HBM stacks around the ASIC' },
+      { kind: 'box', rect: area(375, 175, 482, 237), label: 'Stacked DRAM dies and base die' },
+    ],
     title: 'DRAM을 수직으로 쌓고\n연산 칩 가까이에 배치한다.',
     stat: 'HBM · 고대역폭 메모리',
-    body: '그림 (a)는 연산 칩 주위에 배치된 HBM 스택을 위에서 본 모습이다. 그림 (b)는 DRAM 다이를 여러 층 쌓은 단면을 보여 준다. 아래쪽의 실리콘 인터포저가 HBM과 연산 칩을 짧고 촘촘한 배선으로 연결한다.',
+    body: '실리콘 인터포저가 HBM과 연산 칩을 짧고 촘촘한 배선으로 연결한다.',
+    bullets: [
+      '그림 (a) · 위에서 본 모습: 연산 칩 주위에 HBM 스택을 배치한다.',
+      '그림 (b) · 단면: 여러 DRAM 다이를 수직으로 쌓는다.',
+    ],
     note: '다이는 반도체 회로가 만들어진 칩 조각이며, 스택은 여러 다이를 수직으로 쌓은 구조다. 인터포저는 칩 사이의 미세 배선을 위한 연결층이다.',
   },
   {
@@ -85,10 +122,18 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'TABLE 1',
     page: 4,
     roi: area(31, 175, 524, 404),
-    emphasis: [{ kind: 'box', rect: area(36, 254, 500, 293) }],
+    emphasis: [
+      { kind: 'box', rect: area(375, 235, 449, 292), label: 'HBM3E speed, width and bandwidth' },
+      { kind: 'box', rect: area(456, 235, 519, 292), label: 'HBM4 speed, width and bandwidth' },
+    ],
     title: '연결 폭과 핀당 전송 속도가\n스택 대역폭을 결정한다.',
     stat: '1,024 → 2,048핀',
-    body: '표 1에서 HBM4의 연결 핀 수는 HBM3E의 두 배다. 핀당 전송 속도는 9.8에서 8 Gbit/s로 낮아지지만, 연결 폭이 넓어져 스택 대역폭은 1,254에서 2,048 GB/s로 증가한다.',
+    body: '표 1에서 HBM4는 핀당 속도가 낮아져도 연결 폭을 넓혀 스택 대역폭을 높인다.',
+    bullets: [
+      '연결 핀 수: 1,024 → 2,048개',
+      '핀당 전송 속도: 9.8 → 8 Gbit/s',
+      '스택 대역폭: 1,254 → 2,048 GB/s',
+    ],
     note: '스택 대역폭은 핀 수 × 핀당 전송 속도 ÷ 8로 계산한다. Gbit/s와 GB/s는 비트와 바이트 단위이며 8비트가 1바이트다. 표 3의 HBM4-6400은 다른 동작 속도의 비교 예시다. 표 1의 세대별 최대 용량은 GiB이고, 표 3의 특정 구성 용량은 GB로 제시되어 있다.',
   },
   {
@@ -97,9 +142,22 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'FIGURE 3A · HBM',
     page: 3,
     roi: area(216, 339, 524, 486),
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(475, 367, 493, 379),
+        label: 'HBM capacity cost at the end of the period',
+      },
+      {
+        kind: 'box',
+        rect: area(475, 411, 493, 423),
+        label: 'HBM bandwidth cost at the end of the period',
+      },
+    ],
     title: 'HBM의 용량·대역폭당\n비용이 올랐다.',
     stat: '2023–2025년 · 약 1.35배',
-    body: '파란 선은 용량 1GB당 비용, 빨간 선은 대역폭 1GB/s당 비용이다. 저자들이 인용한 HBM 자료에서는 두 지표가 모두 약 35% 상승했다. 원문은 다이 적층과 고밀도 DRAM의 제조·패키징 난도를 그 배경으로 설명한다.',
+    body: '저자들이 인용한 2023~2025년 HBM 자료에서는 두 지표가 모두 약 35% 상승했다. 원문은 다이 적층과 고밀도 DRAM의 제조·패키징 난도를 그 배경으로 설명한다.',
+    bullets: ['파란 선: 용량 1GB당 비용', '빨간 선: 대역폭 1GB/s당 비용'],
     note: '두 선은 서로 다른 세로축을 사용한다. 선의 높이보다 각 지표가 시간에 따라 얼마나 변했는지 읽는다. 수치는 논문이 인용한 관측 기간의 자료다.',
   },
   {
@@ -108,6 +166,18 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'FIGURE 3B · DDR4',
     page: 3,
     roi: area(216, 487, 524, 633),
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(475, 541, 493, 552),
+        label: 'DDR4 bandwidth cost trendline at the end of the period',
+      },
+      {
+        kind: 'box',
+        rect: area(475, 564, 493, 575),
+        label: 'DDR4 capacity cost trendline at the end of the period',
+      },
+    ],
     title: 'DDR4의 단위 비용은\n하락하는 추세를 보였다.',
     stat: '용량당 0.54배\n대역폭당 0.45배',
     body: '논문이 비교한 2022~2025년 DDR4 자료에서는 용량당 비용이 약 46%, 대역폭당 비용이 약 55% 줄었다. 같은 DRAM 계열이라도 필요한 용량과 대역폭을 어떤 방식으로 확보하느냐에 따라 시스템 비용이 달라진다.',
@@ -119,9 +189,22 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'DECODE CHALLENGE 2',
     page: 4,
     roi: area(31, 413, 357, 737),
+    emphasis: [
+      { kind: 'box', rect: area(48, 533, 191, 628), label: 'Time to first token for long inputs' },
+      {
+        kind: 'box',
+        rect: area(212, 541, 351, 616),
+        label: 'Frequent small messages make latency important',
+      },
+    ],
     title: '토큰을 생성할 때마다\n메모리와 통신을 기다린다.',
     stat: '첫 토큰까지 · 답변 완료까지',
-    body: '입력이 길어지면 첫 토큰을 생성하기 전의 처리 시간이 늘고, 출력이 길어지면 생성 단계를 더 많이 반복한다. 모델을 여러 칩에 나누면 중간 결과를 주고받는 시간도 더해진다. 작은 메시지를 자주 교환하는 Decode에서는 메시지 도착 지연이 중요하다.',
+    body: '작은 메시지를 자주 교환하는 Decode에서는 메시지가 도착할 때까지의 지연이 중요하다.',
+    bullets: [
+      '긴 입력: 첫 토큰을 생성하기 전의 처리 시간이 늘어난다.',
+      '긴 출력: 토큰 생성 단계를 더 많이 반복한다.',
+      '여러 칩: 중간 결과를 주고받는 시간이 추가된다.',
+    ],
     note: '논문은 첫 토큰까지의 시간과 전체 출력이 완료될 때까지의 시간을 구분한다. 긴 문맥은 KV 캐시 접근량도 늘린다. reasoning 모델은 사용자에게 보이는 답변 전에 사고 토큰을 생성할 수 있다.',
   },
   {
@@ -130,9 +213,26 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'TABLE 2',
     page: 5,
     roi: area(44, 176, 531, 521),
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(312, 209, 486, 240),
+        label: 'Memory capacity, bandwidth and latency columns',
+      },
+      {
+        kind: 'box',
+        rect: area(144, 384, 486, 477),
+        label: 'Four research opportunities and their target bottlenecks',
+      },
+    ],
     title: '작업별 병목에 맞춰\n하드웨어를 개선한다.',
     stat: '용량 · 대역폭 · 통신 지연',
-    body: '표 위쪽의 체크 표시는 각 작업에서 중요한 병목을 나타낸다. 아래쪽은 각 병목에 대응하는 HBF의 용량 확장, PNM·3D 적층의 대역폭 개선, 인터커넥트의 지연 감소를 보여 준다. 메모리를 늘려 필요한 칩 수를 줄이면 칩 사이의 통신도 줄어들 수 있다.',
+    body: '표 위쪽의 체크 표시는 작업별로 중요한 병목을 나타낸다. 아래쪽은 각 병목에 대응하는 연구 방향이다.',
+    bullets: [
+      'HBF: 메모리 용량 확장',
+      'PNM·3D 적층: 메모리 대역폭과 전력 효율 개선',
+      '저지연 인터커넥트: 칩 사이의 통신 지연 감소',
+    ],
     note: '위쪽 물음표는 메모리 용량 때문에 시스템이 커질 때 추가로 생길 수 있는 통신 지연이다. 아래쪽 화살표는 시스템 규모를 줄여 통신 지연을 간접적으로 개선할 가능성을 뜻한다. 확산 모델은 주로 연산 수요 증가에 표시된다.',
   },
   {
@@ -141,6 +241,9 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: '연구 방향 1 · FIGURE 4A',
     page: 6,
     roi: area(33, 170, 231, 276),
+    emphasis: [
+      { kind: 'box', rect: area(139, 174, 230, 228), label: 'Flash dies in the HBF stack' },
+    ],
     title: '추론 중 고정된 가중치를\n큰 플래시 스택에 저장한다.',
     stat: 'HBF · 고대역폭 플래시',
     body: '그림 (a)는 HBM과 HBF의 스택 구조를 비교하고, HBF를 연산 칩 곁에 배치한 구성을 보여 준다. HBF는 플래시의 큰 용량에 넓은 읽기 통로를 더하는 설계다. 쓰기 수명과 접근 지연의 제약이 있어, 자주 바뀌는 KV 캐시는 DRAM에 두는 구성이 필요하다.',
@@ -152,10 +255,16 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'TABLE 3 · 용량 비교',
     page: 6,
     roi: area(31, 562, 524, 735),
-    emphasis: [{ kind: 'box', rect: area(36, 638, 237, 677) }],
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(36, 638, 237, 677),
+        label: 'HBF and HBM4 capacity and read bandwidth',
+      },
+    ],
     title: '같은 가중치를 저장하려면\n몇 스택이 필요할까?',
     stat: 'HBF 512 GB\nHBM4 48 GB',
-    body: '표 3의 비교 예시에서 두 스택의 읽기 대역폭은 각각 1,638 GB/s로 같고, HBF의 용량은 약 10.7배다. 아래에서 가중치 용량을 바꾸면 저장 용량만으로 계산한 최소 스택 수를 비교할 수 있다. 실제 구성에서는 KV 캐시 공간과 필요한 대역폭도 고려해야 한다.',
+    body: '표 3의 비교 예시에서 두 스택의 읽기 대역폭은 각각 1,638 GB/s로 같고, HBF의 용량은 약 10.7배다. 아래 표는 가중치 저장 용량만으로 계산한 최소 스택 수다. 실제 구성에서는 KV 캐시 공간과 필요한 대역폭도 고려해야 한다.',
     capacityExample: {
       weightsGB: [256, 512, 1024],
       stacks: [
@@ -171,10 +280,25 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: '연구 방향 2 · TABLE 4',
     page: 7,
     roi: area(44, 440, 531, 737),
-    emphasis: [{ kind: 'box', rect: area(48, 568, 503, 588) }],
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(48, 568, 503, 588),
+        label: 'Memory and logic on one die versus separate dies',
+      },
+      {
+        kind: 'box',
+        rect: area(315, 588, 503, 616),
+        label: 'PNM uses a logic process for compute',
+      },
+    ],
     title: '메모리와 연산 회로를\n어디에 배치할까?',
     stat: 'PIM · PNM',
-    body: 'PIM(메모리 내부 연산)은 메모리와 연산 회로를 같은 다이에 넣고, PNM(메모리 근접 연산)은 서로 다른 다이를 가까이 배치한다. PNM은 연산 회로를 로직 공정으로 따로 만들 수 있어, 성능·전력·면적을 최적화하기 유리하다.',
+    body: 'PNM은 연산 회로를 로직 공정으로 따로 만들 수 있어 성능·전력·면적을 최적화하기 유리하다.',
+    bullets: [
+      'PIM · 메모리 내부 연산: 메모리와 연산 회로를 같은 다이에 넣는다.',
+      'PNM · 메모리 근접 연산: 서로 다른 다이를 가까이 배치한다.',
+    ],
     note: '메모리 공정은 저장 밀도에, 로직 공정은 연산 회로에 적합하게 발전해 왔다. 표 4에서 칩 내부 데이터 이동 전력과 와트당 대역폭은 PIM의 장점이다.',
   },
   {
@@ -183,7 +307,13 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'TABLE 4 · SOFTWARE SHARDING',
     page: 7,
     roi: area(44, 660, 532, 737),
-    emphasis: [{ kind: 'box', rect: area(48, 691, 503, 722) }],
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(48, 691, 503, 722),
+        label: 'Bank-sized PIM shards versus larger PNM shards',
+      },
+    ],
     title: '작업을 나누는 단위가 작으면\n데이터 배치가 어려워진다.',
     stat: 'PIM 32–64 MB\nPNM 16–32 GB',
     body: '샤딩은 모델의 데이터와 작업을 여러 처리 단위로 나누는 것이다. 표의 PIM 예시에서는 메모리 내부 구획인 뱅크 크기에 맞춰 잘게 나눠야 한다. PNM은 더 큰 단위로 나눌 수 있어, 저자들은 데이터센터 LLM의 데이터 배치와 통신을 관리하기에 유리하다고 본다.',
@@ -195,6 +325,13 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: '연구 방향 3 · FIGURE 4B',
     page: 6,
     roi: area(229, 171, 357, 276),
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(257, 187, 346, 229),
+        label: 'DRAM stacked directly above compute logic',
+      },
+    ],
     title: '메모리와 연산 칩 사이를\n수직 연결로 가깝게 잇는다.',
     stat: '3D 메모리·로직 적층',
     body: '그림 (b)의 확대도에서 노란 DRAM 층 아래에 녹색 연산 칩이 보인다. 다이를 위아래로 배치하면 두 다이가 마주 보는 넓은 면에 연결을 촘촘히 배치할 수 있다. 짧고 넓은 데이터 경로로 대역폭과 전력 효율을 높이려는 방법이다.',
@@ -206,9 +343,26 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: '3D STACKING · 설계 선택',
     page: 8,
     roi: area(31, 166, 194, 630),
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(59, 253, 186, 315),
+        label: 'Unchanged HBM bandwidth with lower data movement power',
+      },
+      {
+        kind: 'box',
+        rect: area(59, 326, 174, 411),
+        label: 'Custom 3D solutions use wider and denser interfaces',
+      },
+    ],
     title: '연결 방식을 고르고\n쌓인 칩의 열을 관리한다.',
     stat: 'HBM 재사용 · 맞춤형 적층',
-    body: 'HBM 베이스 다이에 연산 회로를 넣으면 기존 대역폭을 유지하면서 데이터 이동 전력을 줄일 수 있다. 맞춤형 적층은 더 넓고 촘촘한 연결로 대역폭을 높이는 방향이다. 여러 층에서 생기는 열을 배출할 냉각 설계도 함께 필요하다.',
+    body: '연결 방식에 따라 얻는 이점이 다르며, 적층으로 생기는 제조·냉각 과제도 함께 해결해야 한다.',
+    bullets: [
+      'HBM 베이스 다이 연산: 기존 대역폭을 유지하면서 데이터 이동 전력을 줄인다.',
+      '맞춤형 3D 적층: 더 넓고 촘촘한 연결로 대역폭을 높인다.',
+      '냉각: 여러 층에서 생기는 열을 배출할 설계가 필요하다.',
+    ],
     note: '논문은 HBM 베이스 다이 연산에서 짧아진 데이터 경로로 전력을 기존의 약 1/3~1/2로 줄일 수 있다고 설명한다. 발열 대책의 하나로 로직의 전압과 클록을 낮추는 방법을 제안한다. 메모리와 로직을 연결할 인터페이스 표준도 과제로 제시한다.',
   },
   {
@@ -216,10 +370,26 @@ const content: Omit<PaperScene, 'kind'>[] = [
     chapter: '칩 간 통신',
     label: '연구 방향 4 · INTERCONNECT',
     page: 8,
-    roi: area(196, 380, 525, 568),
+    roi: area(196, 380, 360, 737),
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(212, 541, 354, 640),
+        label: 'High connectivity reduces network hops',
+      },
+      {
+        kind: 'box',
+        rect: area(212, 638, 354, 735),
+        label: 'Processing in network aggregates collective communication',
+      },
+    ],
     title: '결과를 받기까지 거치는\n장치와 대기 시간을 줄인다.',
-    stat: '연결 구조 · 네트워크 내 집계',
-    body: '인터커넥트는 여러 연산 칩을 잇는 통신망이다. 메시지가 거치는 장치 수를 줄이거나, 중간 스위치에서 여러 칩의 부분 결과를 합치면 통신 지연을 줄일 수 있다. 원문은 트리 구조에서 부분합을 모으는 방식을 예로 든다.',
+    stat: '연결 구조\n네트워크 내 집계',
+    body: '인터커넥트는 여러 연산 칩을 잇는 통신망이다. 원문은 다음 방법으로 지연을 줄이자고 제안한다.',
+    bullets: [
+      '연결 구조 개선: 메시지가 거치는 장치 수를 줄인다.',
+      '네트워크 내 집계: 중간 스위치에서 여러 칩의 부분 결과를 합친다. 트리 구조의 집계를 예로 든다.',
+    ],
     note: 'all-reduce는 각 칩의 부분 결과를 합쳐 모든 참여 칩이 결과를 받는 연산이다. 가까운 칩과 스위치 안에서 집계하면 통신을 줄일 수 있다.',
   },
   {
@@ -228,6 +398,13 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'DATACENTER AND MOBILE',
     page: 7,
     roi: area(373, 165, 534, 317),
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(376, 215, 533, 315),
+        label: 'Smaller mobile workloads can make PIM viable',
+      },
+    ],
     title: '모바일의 작은 모델에서는\nPIM의 장점이 커질 수 있다.',
     stat: '단일 사용자 · 작은 배치 · 전력 제약',
     body: '모바일은 대체로 모델이 작고 문맥이 짧으며, 사용자 한 명의 요청을 처리한다. 그만큼 작업을 작은 뱅크 단위로 나누기 쉬워지고 연산량과 발열 부담도 줄어든다. 전력 제약이 큰 환경에서는 메모리 내부에서 계산하는 PIM의 가능성을 다시 평가할 수 있다.',
@@ -239,9 +416,21 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'PERFORMANCE AND COST',
     page: 4,
     roi: area(360, 452, 523, 736),
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(364, 529, 521, 602),
+        label: 'TCO, average power and carbon emissions metrics',
+      },
+    ],
     title: '실제 추론 성능을\n운영 비용과 함께 평가한다.',
     stat: '총소유비용 · 전력 · 탄소배출량',
-    body: '메모리와 통신을 기다리는 시간까지 포함해야 실제 추론 성능을 알 수 있다. 저자들은 이를 장비 구입·운영 비용을 합친 총소유비용(TCO), 평균 전력, 탄소배출량과 함께 평가하자고 제안한다. 데이터센터의 전력과 공간 한도 안에서 얻는 성능이 중요하다.',
+    body: '메모리와 통신을 기다리는 시간까지 포함한 실제 추론 성능을, 데이터센터의 전력·공간 한도 안에서 평가해야 한다.',
+    bullets: [
+      '총소유비용(TCO): 장비 구입과 운영에 드는 비용',
+      '평균 전력: 시스템이 운용 중 소비하는 전력',
+      '탄소배출량: 운용 전력과 장비 제조·수명의 영향을 함께 고려',
+    ],
     note: '탄소배출량은 운용 전력뿐 아니라 장비 제조와 수명의 영향도 받는다. 같은 성능을 더 적은 장비와 전력으로 제공할 수 있는지가 평가 대상이다.',
   },
   {
@@ -250,9 +439,21 @@ const content: Omit<PaperScene, 'kind'>[] = [
     label: 'CONCLUSION',
     page: 9,
     roi: area(207, 537, 535, 737),
+    emphasis: [
+      {
+        kind: 'box',
+        rect: area(376, 637, 533, 699),
+        label: 'Recommendation to improve memory and networks along four directions',
+      },
+    ],
     title: '메모리와 통신의 병목에 맞춰\n추론 하드웨어를 설계한다.',
     stat: 'HBF · PNM · 3D 적층 · 저지연 통신',
-    body: 'HBF는 저장 용량을 늘리고, PNM과 3D 적층은 데이터 이동 거리를 줄여 대역폭과 전력 효율을 높인다. 저지연 통신은 여러 칩이 결과를 기다리는 시간을 줄인다. 저자들은 메모리 용량과 샤딩을 반영한 시뮬레이터로 이 설계들을 비용·전력과 함께 비교하자고 제안한다.',
+    body: '저자들은 메모리 용량과 샤딩을 반영한 시뮬레이터로 이 설계들을 비용·전력과 함께 비교하자고 제안한다.',
+    bullets: [
+      'HBF: 저장 용량을 늘린다.',
+      'PNM·3D 적층: 이동 거리를 줄여 대역폭과 전력 효율을 높인다.',
+      '저지연 통신: 여러 칩이 결과를 기다리는 시간을 줄인다.',
+    ],
     note: 'IEEE Computer 59(5), 2026년 5월, pp.55–64의 출판본 기준이다. 네 가지 방향은 함께 활용할 수 있는 연구 제안이다. 가격 자료 부록은 IEEE 온라인 보충자료로 별도 제공된다.',
   },
 ];

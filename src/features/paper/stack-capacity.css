@@ -1,34 +1,44 @@
 .stack-capacity {
-  border-block: 1px solid #d9e3e8;
   margin-block: 1.2rem;
-  padding-block: 0.8rem;
   color: #395568;
+  font-size: clamp(12px, 1vw, 15px);
 }
-.stack-capacity label,
-.stack-capacity dl > div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1em;
+.stack-capacity table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  line-height: 1.6;
 }
-.stack-capacity label {
+.stack-capacity caption {
+  padding-bottom: 0.7em;
+  text-align: left;
   font-weight: 600;
 }
-.stack-capacity select {
-  font: inherit;
-  padding: 0.3em;
-  color: #006ba1;
-  border: 1px solid #b9cbd5;
-  border-radius: 4px;
-  background: #fff;
+.stack-capacity th,
+.stack-capacity td {
+  padding: 0.65em 0.35em;
+  border-block: 1px solid #d9e3e8;
+  text-align: center;
+  vertical-align: middle;
 }
-.stack-capacity dl {
-  margin: 0.5rem 0 0;
+.stack-capacity thead th {
+  background: #f4f7f9;
+  font-weight: 600;
 }
-.stack-capacity dl > div {
-  padding: 0.4em 0;
+.stack-capacity th:first-child {
+  width: 34%;
+  text-align: left;
 }
-.stack-capacity dd {
-  margin: 0;
-  font-weight: 700;
+.stack-capacity tbody th {
+  font-weight: 400;
+  white-space: nowrap;
+}
+.stack-capacity td {
+  font-weight: 600;
+}
+.stack-capacity small {
+  display: block;
+  font-size: 0.85em;
+  font-weight: 400;
+  white-space: nowrap;
 }

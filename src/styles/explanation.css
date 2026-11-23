@@ -27,6 +27,7 @@
   white-space: pre-line;
   color: var(--accent);
   margin-bottom: 22px;
+  word-break: keep-all;
   overflow-wrap: anywhere;
 }
 .scene-stat.long {
@@ -39,6 +40,20 @@
   color: #4e5559;
   white-space: pre-line;
   word-break: keep-all;
+}
+.scene-points {
+  margin: 12px 0 0;
+  padding-left: 1.15em;
+}
+.scene-points:first-child {
+  margin-top: 0;
+}
+.scene-points li + li {
+  margin-top: 0.6em;
+}
+.scene-points li::marker {
+  color: #006ba1;
+  font-size: 0.8em;
 }
 .figure-tabs {
   margin: 28px 0 0;

@@ -19,6 +19,7 @@ interface SceneText {
   title: string;
   stat: string;
   body: string;
+  bullets?: string[];
   note?: string;
   source?: string;
   takeaway?: string;
