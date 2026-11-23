@@ -46,7 +46,7 @@ export const paper = {
   conditions: Object.fromEntries(
     ['fig3a', 'fig3b', 'fig3c', 'fig3d'].map((id) => [
       id,
-      'Intel Gold 6242 CPU · 배치 크기 1\n비교 기준: 시퀀스 길이 128',
+      'Intel Gold 6242 CPU · 배치 1 · 8비트 저장\n비교 기준: 시퀀스 길이 128',
     ]),
   ),
   features: { hbm: { geometry, fallback: asset('hbm-anatomy.svg') } },

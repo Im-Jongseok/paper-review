@@ -18,8 +18,8 @@ export function PimDetails() {
                 <span className="industry-status">Aquabolt-XL</span>
               </div>
               <p>
-                논문의 GPU 시스템 평가에서 GEMV 마이크로커널은 8.9배, 음성 인식은 3.5배 성능 향상을
-                보고했다.
+                Aquabolt-XL 연구의 GPU 시스템 평가에서 행렬–벡터 곱(GEMV) 커널은 8.9배, 음성 인식은
+                3.5배 성능 향상을 보고했다.
               </p>
             </li>
           </ol>

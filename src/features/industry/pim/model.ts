@@ -25,21 +25,21 @@ export const PIM_STEPS = [
 export const PIM_EXPLANATION = {
   structure: {
     label: 'HBM-PIM · AQUABOLT-XL',
-    title: '데이터를 옮기는 대신,\n메모리 안에서 계산한다.',
+    title: '메모리 안에서 계산해\n칩 밖으로 옮길 데이터를 줄인다.',
     stat: 'DRAM 뱅크 곁의 PCU',
-    body: 'HBM-PIM은 메모리 코어 다이에 연산기를 넣는다. CPU·GPU가 명령과 입력을 보내면, PCU가 가까운 뱅크의 가중치를 읽어 계산한다. 지원 연산에서 가중치를 외부로 반복 전송하는 부담을 줄인다.',
+    body: 'HBM-PIM은 데이터를 저장하는 DRAM 다이 안에 연산기인 PCU를 넣는다. 뱅크는 DRAM 내부의 저장 구역이다. CPU·GPU가 명령과 입력을 보내면, PCU가 인접한 뱅크의 가중치를 읽어 계산한다. 지원되는 연산에서 가중치를 칩 밖으로 반복 전송하는 부담을 줄인다.',
   },
   compute: {
     label: 'HBM-PIM · PCU 내부',
     title: '읽은 값을 곱하고,\n중간 결과에 더한다.',
     stat: '명령 하나로 여러 값 처리',
-    body: 'PCU는 명령 제어기·레지스터·연산 회로로 구성된다. 삼성 Aquabolt-XL은 16-lane FP16 SIMD로 여러 값을 병렬 처리한다. 왼쪽은 그중 한 lane의 곱누산을 세 항으로 단순화한 예다.',
+    body: '삼성 Aquabolt-XL의 PCU는 한 명령으로 16개 연산 경로에서 16비트 부동소수점 값을 병렬 처리한다. 이를 SIMD 방식이라 한다. 왼쪽은 그중 한 경로가 읽은 값을 곱하고 중간 결과에 누적해 더하는 과정을 세 항으로 단순화한 예다.',
   },
   system: {
     label: 'LLM 적용 · NEUPIMS / ASPLOS 2024',
     title: '계산이 많은 연산과\n이동이 많은 연산을 나눈다.',
     stat: 'NPU + PIM',
-    body: '여러 요청을 묶은 LLM 추론에서는 연산마다 특성이 다르다. NeuPIMs는 가중치 재사용이 많은 행렬–행렬 연산을 NPU에, 요청별 KV 캐시를 읽는 어텐션의 행렬–벡터 연산을 PIM에 맡긴다.',
+    body: '여러 요청을 묶은 LLM 추론에서는 연산마다 계산과 데이터 이동의 비중이 다르다. NeuPIMs 연구는 가중치 재사용이 많은 행렬–행렬 곱을 NPU에, 요청별 KV 캐시를 읽는 어텐션의 행렬–벡터 곱을 PIM에 맡기는 구조를 제안하고 시뮬레이션으로 평가했다.',
   },
 };
 export function pimMode(index: number) {

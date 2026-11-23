@@ -8,7 +8,7 @@ export function CerebrasDetails() {
           <caption>SRAM을 무엇으로, 어떻게 쓰는가?</caption>
           <thead>
             <tr>
-              <th scope="col">일반 CPU·GPU 캐시</th>
+              <th scope="col">CPU·GPU의 하드웨어 캐시</th>
               <th scope="col">Cerebras 로컬 SRAM</th>
             </tr>
           </thead>
@@ -21,12 +21,12 @@ export function CerebrasDetails() {
               <td>
                 하드웨어가 자동 적재·교체
                 <br />
-                <small>없으면 캐시 미스</small>
+                <small>필요한 값이 없으면 하위 메모리에서 읽기</small>
               </td>
               <td>
                 컴파일러·프로그램이 배치·전송을 관리
                 <br />
-                <small>스크래치패드 방식</small>
+                <small>소프트웨어 관리형 메모리</small>
               </td>
             </tr>
           </tbody>

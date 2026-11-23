@@ -35,7 +35,7 @@ export function CxmtDetails({ scene }: { scene: IndustryScene }) {
             수직 채널의 깊은 접점 형성, 균일한 절연막·게이트 제조, 누설과 셀 간 간섭을 함께 해결해야
             한다.
           </p>
-          <p>게이트가 채널을 둘러싸도 절연막으로 분리되어 있다.</p>
+          <p>셀을 촘촘히 배치하면서도 전하를 안정적으로 유지해야 한다.</p>
         </div>
       ) : mode === 'array' ? (
         <p className="cxmt-keyline">
@@ -43,7 +43,7 @@ export function CxmtDetails({ scene }: { scene: IndustryScene }) {
             {arrayArea}F² ÷ {originalArea}F² = {originalCells}셀
           </strong>
           <br />
-          어레이 경계와 F를 고정한 기준 화면이다. 다음 입력 전까지 이 배열을 유지한다.
+          같은 기준 치수 F · 같은 어레이 면적에서 셀 수 비교
         </p>
       ) : (
         <>
