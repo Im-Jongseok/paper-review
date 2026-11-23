@@ -1,8 +1,11 @@
-# AI and Memory Wall · 논문 리뷰
+# 논문 리뷰
 
 논문 원문을 확대·강조하며 설명하는 인터랙티브 발표 자료. React · TypeScript · Vite · Three.js를 사용한다.
 
 [발표 자료 열기](https://im-jongseok.github.io/paper-review/)
+
+- [18번 · AI and Memory Wall](https://im-jongseok.github.io/paper-review/#start)
+- [26번 · Challenges and Research Directions for Large Language Model Inference Hardware](https://im-jongseok.github.io/paper-review/#papers/llm-inference-hardware/start)
 
 ## 실행
 
@@ -18,6 +21,7 @@ npm run dev
 ```sh
 npm run build     # 모형 생성 → 타입 검사 → 웹 빌드 → 오프라인 HTML
 npm run preview   # 웹 빌드 확인
+npm run export -- llm-inference-hardware  # 26번 논문의 오프라인 HTML
 ```
 
 웹 배포물은 `dist/`, 오프라인 HTML은 프로젝트 상위 폴더에 생성된다.
@@ -45,7 +49,7 @@ scripts/
 docs/                   논문 추가 방법·구조 설명
 ```
 
-- 발표 문구·확대 위치: `src/papers/ai-memory-wall/scenes.ts`
+- 발표 문구·확대 위치: `src/papers/<논문 ID>/scenes.ts`
 - 새 논문 추가: [docs/ADDING_PAPERS.md](docs/ADDING_PAPERS.md)
 - 구조 설명: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
@@ -55,4 +59,4 @@ docs/                   논문 추가 방법·구조 설명
 
 `main`에 push하면 GitHub Actions가 빌드 후 GitHub Pages에 자동 배포한다.
 
-원문: IEEE Micro 44(3), 2024, pp.33–39, [DOI: 10.1109/MM.2024.3373763](https://doi.org/10.1109/MM.2024.3373763). 보충 모형은 교육용 개념도이며, 기술 출처는 발표 노트와 장면 데이터에 보관한다.
+원문은 각 발표의 출처 장면에서 확인할 수 있다. 보충 모형은 교육용 개념도이며, 기술 출처는 발표 노트와 장면 데이터에 보관한다.

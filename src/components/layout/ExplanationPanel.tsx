@@ -1,3 +1,4 @@
+import { StackCapacityExample } from '../../features/paper/StackCapacityExample';
 import { usePimStep } from '../../features/industry/pim/context';
 import { PIM_EXPLANATION, pimMode } from '../../features/industry/pim/model';
 import { useEffect, useRef } from 'react';
@@ -73,6 +74,9 @@ export function ExplanationPanel({
           ? '표시된 영역을 선택하면 해당 그림이나 문단으로 이동합니다. 휠이나 드래그로 이동하고, Ctrl+휠로 확대할 수 있습니다.'
           : text.body}
       </p>
+      {scene.kind === 'paper' && scene.capacityExample && !page && (
+        <StackCapacityExample key={scene.id} example={scene.capacityExample} />
+      )}
       {scene.kind === 'industry' && !page ? <IndustryDetails scene={scene} /> : null}
       <section
         id="hbm-basics"

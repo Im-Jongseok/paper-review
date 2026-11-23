@@ -29,6 +29,10 @@ export interface PaperScene extends SceneText {
   roi?: Region | null;
   highlight?: Region | null;
   emphasis?: Emphasis[];
+  capacityExample?: {
+    weightsGB: number[];
+    stacks: { name: string; capacityGB: number }[];
+  };
   opening?: boolean;
   focus?: boolean;
   panTop?: number;
