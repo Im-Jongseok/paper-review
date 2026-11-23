@@ -4,7 +4,7 @@ export type Route =
   { kind: 'library' } | { kind: 'paper'; paper: PaperDefinition; sceneId: string };
 export function readRoute(): Route {
   const hash = decodeURIComponent(location.hash.slice(1));
-  if (hash === 'library') return { kind: 'library' };
+  if (hash === 'library' || (!hash && !window.__PAPER_EXPORT__)) return { kind: 'library' };
   const [, paperId, requestedScene] = hash.match(/^papers\/([^/]+)(?:\/(.*))?$/) ?? [];
   const list = availablePapers();
   const selected = paperId

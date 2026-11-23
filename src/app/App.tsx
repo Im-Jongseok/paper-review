@@ -15,7 +15,11 @@ export function App() {
     };
     listener();
     window.addEventListener('hashchange', listener);
-    return () => window.removeEventListener('hashchange', listener);
+    window.addEventListener('popstate', listener);
+    return () => {
+      window.removeEventListener('hashchange', listener);
+      window.removeEventListener('popstate', listener);
+    };
   }, []);
   useEffect(() => {
     document.title =
@@ -32,7 +36,10 @@ export function App() {
   return route.kind === 'library' ? (
     <PaperLibrary
       papers={availablePapers()}
-      onSelect={(paper) => navigate(paper, paper.scenes[0].id)}
+      onSelect={(paper) => {
+        history.pushState(null, '', sceneHash(paper, paper.scenes[0].id));
+        navigate(paper, paper.scenes[0].id);
+      }}
     />
   ) : (
     <Presentation
